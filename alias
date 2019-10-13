@@ -1,0 +1,28 @@
+export DPTH="ruixingw@login.deepthought2.umd.edu"
+export WRXCN="ruixingw@www.wangruixing.cn"
+export COMET="ruixingw@comet.sdsc.edu"
+export WRXJP="ubuntu@jp.wangruixing.cn"
+export DESK="ruixingw@shredpapa.ddns.net"
+
+# ssh with reverse port forwarding (tunneling)
+# will bind remote port 2233 with local port 22
+# must have openssh-server installed locally
+# -X for X11 forwarding, -C for compression, -g allows connection to local.
+alias dpth="ssh -X -C -g -R 2233:localhost:22 $DPTH" 
+alias wrxcn="ssh -X -C -g -R 2233:localhost:22 $WRXCN"
+alias wrxjp="ssh -X -C -g -R 2233:localhost:22 $WRXJP"
+alias comet="ssh -X -C -g -R 2233:localhost:22 $COMET"
+alias desk="ssh -X -C -g -R 2233:localhost:22 $DESK"
+
+# From the server we can download files to the local through the ssh tunnel. 
+# Usage: dz filename [path]
+# [path] is optional with a download path predefined in "else" section.
+# This is excuted on the server side.
+function dz () {
+  if [ $2 ]; then
+       scp -P 2233 $1 ruixingw@localhost:/home/ruixingw/$2
+  else
+       scp -P 2233 $1 ruixingw@localhost:/home/ruixingw/Downloads/;
+  fi
+}
+
